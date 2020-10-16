@@ -8,28 +8,22 @@
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
-import { getHomeMultidata } from "network/home.js";
+import {getHomeMultidata} from "network/home.js"
 export default {
   name: "home",
   components: {
     NavBar,
   },
-  data() {
-    return {
-      result: null,
-    };
-  },
-  created() {
-    getHomeMultidata().then((res) => {
-      // console.log(res);
-      this.result = res;
-    });
-  },
+  created(){
+    getHomeMultidata().then(res =>{
+      console.log(res)
+    })
+  }
 };
 </script>
 
 <style scoped>
-.home-nav {
+.home-nav{
   background-color: var(--color-tint);
   color: #fff;
 }

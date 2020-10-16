@@ -1,14 +1,8 @@
 <template>
-  <div class="nav_bar">
-    <div class="left">
-      <slot name="left"></slot>
-    </div>
-    <div class="center">
-      <slot name="center"></slot>
-    </div>
-    <div class="right">
-      <slot name="right"></slot>
-    </div>
+  <div id="nav_bar">
+    <div name="left"></div>
+    <div name="center"></div>
+    <div name="right"></div>
   </div>
 </template>
 
@@ -19,7 +13,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.nav_bar {
+.nav-bar {
   display: flex;
   height: 44px;
   line-height: 44px;
