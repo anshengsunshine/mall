@@ -16,13 +16,15 @@ export default {
   },
   data() {
     return {
-      result: null,
+      banners:[],
+      recommends:[],
     };
   },
   created() {
     getHomeMultidata().then((res) => {
       // console.log(res);
-      this.result = res;
+      this.banners = res.data.banner;
+      this.recommends = res.data.recommend;
     });
   },
 };
