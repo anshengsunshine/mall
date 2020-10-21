@@ -1,7 +1,7 @@
 <template>
   <div class="recommend">
     <div
-      class="recommend-item"
+      class="recommend_item"
       v-for="(item, index) in recommends"
       :key="index"
     >
@@ -36,7 +36,7 @@ export default {
   font-size: 12px;
   border-bottom: 8px solid #eee;
 
-  .recommend-item {
+  .recommend_item {
     flex: 1;
 
     img {

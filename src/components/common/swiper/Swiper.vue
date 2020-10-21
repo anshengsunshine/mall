@@ -1,5 +1,5 @@
 <template>
-  <div id="J-swiper">
+  <div id="J_swiper">
     <div
       class="swiper"
       @touchstart="touchStart"
@@ -13,7 +13,7 @@
       <slot name="indicator" v-if="showIndicator && slideCount > 1">
         <div
           v-for="(item, index) in slideCount"
-          class="indi-item"
+          class="indi_item"
           :class="{ active: index === currentIndex - 1 }"
           :key="index"
         ></div>
@@ -216,7 +216,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#J-swiper {
+#J_swiper {
   overflow: hidden;
   position: relative;
   .swiper {
@@ -228,7 +228,7 @@ export default {
     position: absolute;
     bottom: 8px;
     width: 100%;
-    .indi-item {
+    .indi_item {
       box-sizing: border-box;
       width: 8px;
       height: 8px;
@@ -239,7 +239,7 @@ export default {
       font-size: 12px;
       margin: 0 5px;
     }
-    .indi-item.active {
+    .indi_item.active {
       background-color: rgba(212, 62, 46, 1);
     }
   }
