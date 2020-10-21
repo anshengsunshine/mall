@@ -1,5 +1,5 @@
 <template>
-  <div id="J-swiper">
+  <div id="hy-swiper">
     <div
       class="swiper"
       @touchstart="touchStart"
@@ -216,7 +216,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#J-swiper {
+#hy-swiper {
   overflow: hidden;
   position: relative;
   .swiper {

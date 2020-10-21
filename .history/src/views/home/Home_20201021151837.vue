@@ -4,7 +4,7 @@
       <div slot="center">购物街</div>
     </nav-bar>
     <home-swiper :banners="banners" />
-    <recommend-view :recommends="recommends" />
+    <recommend-view />
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     getHomeMultidata().then((res) => {
       console.log(res);
       this.banners = res.data.banner.list;
-      this.recommends = res.data.recommend.list;
+      this.recommends = res.data.recommend;
     });
   },
 };

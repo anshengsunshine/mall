@@ -1,5 +1,5 @@
 <template>
-  <div id="J-swiper">
+  <div id="hy-swiper">
     <div
       class="swiper"
       @touchstart="touchStart"
@@ -34,7 +34,7 @@ export default {
       type: Number,
       default: 300,
     },
-    moveRatio: {
+    moveRation: {
       type: Number,
       default: 0.25,
     },
@@ -47,12 +47,12 @@ export default {
     return {
       slideCount: 0, // 元素个数
       totalWidth: 0, // swiper的宽度
-      swiperStyle: {}, // swiper样式
+      swiperStyle: {}, // sipwer样式
       currentIndex: 1, //当前的index
-      scrolling: false, //是否正在滚动
+      scrolling: false, //是否在滚动
     };
   },
-  mounted() {
+  mouted() {
     // 1.操作DOM，在前后添加Slide
     setTimeout(() => {
       this.handleDom();
@@ -123,7 +123,7 @@ export default {
     handleDom() {
       // 1.获取要操作的元素
       let swiperEl = document.querySelector(".swiper");
-      let slidesEls = swiperEl.getElementsByClassName("slide");
+      let slidesEls = siperEl.getElementsByClassName("slide");
 
       // 2.保存个数
       this.slideCount = slidesEls.length;
@@ -173,13 +173,13 @@ export default {
         return;
       } else if (
         this.distance > 0 &&
-        currentMove > this.totalWidth * this.moveRatio
+        currentMove > this.totalWidth * this.moveRation
       ) {
         // 右边移动超过0.5
         this.currentIndex--;
       } else if (
         this.distance < 0 &&
-        currentMove > this.totalWidth * this.moveRatio
+        currentMove > this.totalWidth * this.moveRation
       ) {
         // 左边移动超过0.5
         this.currentIndex++;
@@ -216,7 +216,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#J-swiper {
+#hy-swiper {
   overflow: hidden;
   position: relative;
   .swiper {
@@ -240,7 +240,7 @@ export default {
       margin: 0 5px;
     }
     .indi-item.active {
-      background-color: rgba(212, 62, 46, 1);
+      background-color: rgb(121, 62, 46, 1);
     }
   }
 }
