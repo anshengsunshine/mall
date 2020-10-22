@@ -2,6 +2,11 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 Vue.use(VueRouter)
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [{
         path: "",
         redirect: "/home"
@@ -19,7 +24,7 @@ const routes = [{
         path: "/cart",
         name: "购物车",
         component: () =>
-            import('@/views/cart/cart')
+            import('@/views/cart/Cart')
     },
     {
         path: "/profile",
