@@ -151,65 +151,9 @@ export default {
     });
 
     // 请求商品数据
-    // getHomeGoods("pop", 1).then((res) => {
-    //   console.log(res);
-    // });
-  },
-  mounted() {
-    this.$nextTick(() => {
-      this.onPullingDown();
+    getHomeGoods("pop", 1).then((res) => {
+      console.log(res);
     });
-  },
-  methods: {
-    getHomeList(pageIndex) {
-      //https://nfxts.520shq.com/localQuickPurchase/ogMongoAction/queryByGId?genreId=1&pageSize=5&pageIndex=11
-      //const url = 'https://nfxts.520shq.com/localQuickPurchase/selectionGoods/v2/selectionGoodsCom';
-      const url =
-        "https://nfxts.520shq.com/localQuickPurchase/ogMongoAction/queryByGId?genreId=1";
-      const res = this.axios.get(url, {
-        params: {
-          pageIndex,
-          pageSize: 10,
-        },
-      });
-
-      // console.log(res, '222222222222222');
-      if (res.code === 200) {
-        this.pageIndex++;
-        this.goodsList.push(...res.data.list);
-        // res.data.hasNextPage && this.$refs.scroll.forceUpdate(true)
-        if (res.data.hasNextPage) {
-          this.$refs.scroll.forceUpdate(true);
-        } else {
-          //没有更多数据了
-          this.$refs.scroll.forceUpdate(false);
-        }
-      }
-    },
-    onPullingDown() {
-      // 模拟下拉刷新
-      this.pageIndex = 1;
-      console.log("下拉刷新", this.pageIndex);
-      this.getHomeList(this.pageIndex);
-      // count = 0
-      // this.getData().then(res => {
-      //     this.items = res
-      //     this.$refs.scroll.forceUpdate(true)
-      // })
-    },
-    onPullingUp() {
-      // 模拟上拉 加载更多数据
-      console.log("上拉加载", this.pageIndex);
-      this.getHomeList(this.pageIndex);
-      // this.getData().then(res => {
-      //     this.items = this.items.concat(res)
-      //     if (count < 40) {
-      //         this.$refs.scroll.forceUpdate(true)
-      //     } else {
-      //         this.$refs.scroll.forceUpdate(false)
-      //     }
-      // })
-    },
   },
 };
 </script>
