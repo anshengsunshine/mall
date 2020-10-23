@@ -136,24 +136,36 @@ export default {
       recommends: [],
       goods: {
         pop: { page: 0, list: [] },
-        news: { page: 0, list: [] },
+        new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
       pageIndex: 1,
     };
   },
   created() {
+    this.getHomeMultidata();
+    this.getHomeGoods("pop");
+    this.getHomeGoods("new");
+    this.getHomeGoods("sell");
+  },
+  methods: {
     // 请求banner图和类型组件的数据
-    getHomeMultidata().then((res) => {
-      // console.log(res);
-      this.banners = res.data.banner.list;
-      this.recommends = res.data.recommend.list;
-    });
-
+    getHomeMultidata() {
+      getHomeMultidata().then((res) => {
+        // console.log(res);
+        this.banners = res.data.banner.list;
+        this.recommends = res.data.recommend.list;
+      });
+    },
     // 请求商品数据
-    getHomeGoods("pop", 1).then((res) => {
-      console.log(res);
-    });
+    getHomeGoods(type) {
+      const page = this.goods[type].page + 1;
+      getHomeGoods(type, page).then((res) => {
+        console.log(res);
+        this.goods[type].list.push(...res.data.list);
+        this.goods[type].page += 1;
+      });
+    },
   },
 };
 </script>
