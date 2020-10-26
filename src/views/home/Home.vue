@@ -3,7 +3,12 @@
     <nav-bar class="home_nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <scroll class="content">
+    <scroll
+      class="content"
+      ref="scroll"
+      :probe-type="3"
+      @scroll="contentScroll"
+    >
       <home-swiper :banners="banners" />
       <feature-view :features="recommends"></feature-view>
       <recommend-view></recommend-view>
@@ -14,6 +19,7 @@
       />
       <goods-list :goods="showGoods" />
     </scroll>
+    <back-top @click.native="backTopClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -26,6 +32,7 @@ import NavBar from "components/common/navbar/NavBar";
 import Scroll from "components/common/scroll/Scroll";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
+import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home.js";
 export default {
@@ -38,6 +45,7 @@ export default {
     Scroll,
     TabControl,
     GoodsList,
+    BackTop,
   },
   data() {
     return {
@@ -49,6 +57,7 @@ export default {
         sell: { page: 0, list: [] },
       },
       currentType: "pop",
+      isShowBackTop: false,
     };
   },
   computed: {
@@ -78,6 +87,12 @@ export default {
           this.currentType = "sell";
           break;
       }
+    },
+    backTopClick() {
+      this.$refs.scroll.scrollTo(0, 0);
+    },
+    contentScroll(position) {
+      this.isShowBackTop = -position.y > 1000;
     },
     /**
      * 网络请求的方法
@@ -123,12 +138,12 @@ export default {
     z-index: 9;
   }
   .content {
-    // position: absolute;
-    // top: 44px;
-    // bottom: 49px;
-    // left: 0;
-    // right: 0;
-    height: calc(100vh - 44px - 49px);
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
+    // height: calc(100vh - 44px - 49px);
     overflow: hidden;
   }
 }
