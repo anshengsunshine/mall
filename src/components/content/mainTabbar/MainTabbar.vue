@@ -1,31 +1,28 @@
 <template>
   <tab-bar>
-    <tab-bar-item path="/home" activeColor="#f5be33">
-      <img slot="item_icon" src="assets/img/tabbar/home.png" />
-      <img slot="item_icon_active" src="assets/img/tabbar/home_active.png" />
+    <tab-bar-item path="/home" activeColor="rgb(255 87 119)">
+      <img slot="item_icon" src="~assets/img/tabbar/home.svg" />
+      <img slot="item_icon_active" src="~assets/img/tabbar/home_active.svg" />
       <div slot="item_text">首页</div>
     </tab-bar-item>
-    <tab-bar-item path="/category" activeColor="#f5be33">
-      <img slot="item_icon" src="assets/img/tabbar/category.png" />
+    <tab-bar-item path="/category" activeColor="rgb(255 87 119)">
+      <img slot="item_icon" src="~assets/img/tabbar/category.svg" />
       <img
         slot="item_icon_active"
-        src="assets/img/tabbar/category_active.png"
+        src="~assets/img/tabbar/category_active.svg"
       />
       <div slot="item_text">分类</div>
     </tab-bar-item>
-    <tab-bar-item path="/cart" activeColor="#f5be33">
-      <img slot="item_icon" src="assets/img/tabbar/cart.png" />
-      <img
-        slot="item_icon_active"
-        src="assets/img/tabbar/cart_active.png"
-      />
+    <tab-bar-item path="/cart" activeColor="rgb(255 87 119)">
+      <img slot="item_icon" src="~assets/img/tabbar/cart.svg" />
+      <img slot="item_icon_active" src="~assets/img/tabbar/cart_active.svg" />
       <div slot="item_text">购物车</div>
     </tab-bar-item>
-    <tab-bar-item path="/profile" activeColor="#f5be33">
-      <img slot="item_icon" src="assets/img/tabbar/profile.png" />
+    <tab-bar-item path="/profile" activeColor="rgb(255 87 119)">
+      <img slot="item_icon" src="~assets/img/tabbar/profile.svg" />
       <img
         slot="item_icon_active"
-        src="assets/img/tabbar/profile_active.png"
+        src="~assets/img/tabbar/profile_active.svg"
       />
       <div slot="item_text">我的</div>
     </tab-bar-item>
@@ -39,8 +36,8 @@ export default {
   name: "MainTabbar",
   components: {
     TabBar,
-    TabBarItem
-  }
+    TabBarItem,
+  },
 };
 </script>
 
