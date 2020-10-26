@@ -7,10 +7,10 @@
       class="content"
       ref="scroll"
       @scroll="contentScroll"
-      @pullingUp="loadMore"
       :probe-type="3"
       :pull-up-load="true"
     >
+      <!-- @pullingUp="loadMore" -->
       <home-swiper :banners="banners" />
       <feature-view :features="recommends"></feature-view>
       <recommend-view></recommend-view>
@@ -68,10 +68,18 @@ export default {
     },
   },
   created() {
+    // 1.请求多个数据
     this.getHomeMultidata();
+
+    // 2.请求商品数据
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+
+    // 3.监听item中图片加载完成
+    this.$bus.$on("itemImageLoad", () => {
+      this.$refs.scroll.refresh();
+    });
   },
   methods: {
     /**
@@ -96,10 +104,10 @@ export default {
     contentScroll(position) {
       this.isShowBackTop = -position.y > 1000;
     },
-    loadMore() {
-      this.getHomeGoods(this.currentType)
-      this.$refs.scroll.scroll.refresh()
-    },
+    // loadMore() {
+    //   this.getHomeGoods(this.currentType)
+    //   this.$refs.scroll.scroll.refresh()
+    // },
     /**
      * 网络请求的方法
      */
@@ -118,7 +126,7 @@ export default {
         console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
-        this.$refs.scroll.finishPullUp()
+        // this.$refs.scroll.finishPullUp()
       });
     },
   },
