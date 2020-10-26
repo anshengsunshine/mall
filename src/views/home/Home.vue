@@ -78,15 +78,25 @@ export default {
   },
   mounted() {
     // 监听item中图片加载完成
+    const refresh = this.debounce(this.$refs.scroll.refresh, 50);
     this.$bus.$on("itemImageLoad", () => {
-      this.$refs.scroll.refresh();
-      console.log("--------");
+      refresh();
     });
   },
   methods: {
     /**
      * 事件监听的方法
      */
+    // 防抖函数
+    debounce(func, delay) {
+      let timer = null;
+      return function (...args) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          func.apply(this, args);
+        }, delay);
+      };
+    },
     tabClick(index) {
       switch (index) {
         case 0:
@@ -125,7 +135,7 @@ export default {
     getHomeGoods(type) {
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
-        console.log(res);
+        // console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page += 1;
         // this.$refs.scroll.finishPullUp()

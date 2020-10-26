@@ -37,8 +37,6 @@ export default {
     this.scroll.on("scroll", (position) => {
       this.$emit("scroll", position);
     });
-
-    console.log(this.scroll);
     this.scroll.refresh();
     // 3.监听上拉事件
     // this.scroll.on("pullingUp", () => {
