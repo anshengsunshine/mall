@@ -31,6 +31,11 @@ const routes = [{
         name: "我的",
         component: () =>
             import('@/views/profile/Profile')
+    },
+    {
+        path: "/detail/:iid",
+        component: () =>
+            import('@/views/detail/Detail')
     }
 ]
 const router = new VueRouter({
