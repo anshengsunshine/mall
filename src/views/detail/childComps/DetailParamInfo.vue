@@ -50,7 +50,7 @@ export default {
     }
   }
   .info_param {
-    border-top: 1px solid rgb(0, 0, 0, 0.1);
+    border-top: 1px solid rgtb(0, 0, 0, 0.1);
     .info_param_key {
       width: 95px;
     }
