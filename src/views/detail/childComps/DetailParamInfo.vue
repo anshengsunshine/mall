@@ -9,12 +9,14 @@
         <td v-for="(td, indez) in tr" :key="indez">{{ td }}</td>
       </tr>
     </table>
+
     <table class="info_param">
       <tr v-for="(info, indea) in paramInfo.infos" :key="indea">
         <td class="info_param_key">{{ info.key }}</td>
         <td class="param_value">{{ info.value }}</td>
       </tr>
     </table>
+
     <div class="info_img" v-if="paramInfo.image.length !== 0">
       <img :src="paramInfo.image" alt="" />
     </div>
@@ -46,14 +48,14 @@ export default {
         border-bottom: 1px solid rgba(100, 100, 100, 0.1);
       }
     }
-    .info_param {
-      border-top: 1px solid rgb(0, 0, 0, 0.1);
-      .info_param_key {
-        width: 95px;
-      }
-      .param_value {
-        color: #eb4868;
-      }
+  }
+  .info_param {
+    border-top: 1px solid rgb(0, 0, 0, 0.1);
+    .info_param_key {
+      width: 95px;
+    }
+    .param_value {
+      color: #eb4868;
     }
   }
   .info_img img {
