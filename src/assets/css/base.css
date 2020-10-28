@@ -32,7 +32,7 @@ a {
     text-decoration: none;
 }
 
-.clear-fix::after {
+.clear_fix::after {
     clear: both;
     content: "";
     display: block;
@@ -41,7 +41,7 @@ a {
     visibility: hidden;
 }
 
-.clear-fix {
+.clear_fix {
     zoom: 1;
 }
 

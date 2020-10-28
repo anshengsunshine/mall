@@ -126,7 +126,7 @@ export default {
     },
     loadMore() {
       this.getHomeGoods(this.currentType);
-      this.$refs.scroll.scroll.refresh();
+      this.$refs.scroll.refresh();
     },
     swiperImageLoad() {
       this.tabOffsetTop = this.$refs.tabControl_2.$el.offsetTop;

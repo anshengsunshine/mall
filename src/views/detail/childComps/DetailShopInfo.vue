@@ -124,19 +124,19 @@ export default {
         background-color: #f13e3a;
       }
     }
-    .shop_bottom {
-      margin-top: 10px;
+  }
+  .shop_bottom {
+    margin-top: 10px;
+    text-align: center;
+    .enter_shop {
+      display: inline-block;
+      width: 150px;
+      height: 30px;
       text-align: center;
-      .enter_shop {
-        display: inline-block;
-        width: 150px;
-        height: 30px;
-        text-align: center;
-        line-height: 30px;
-        border-radius: 10px;
-        font-size: 14px;
-        background-color: #f2f5f8;
-      }
+      line-height: 30px;
+      border-radius: 10px;
+      font-size: 14px;
+      background-color: #f2f5f8;
     }
   }
 }
