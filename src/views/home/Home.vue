@@ -45,7 +45,7 @@ import GoodsList from "components/content/goods/GoodsList";
 import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getHomeGoods } from "network/home.js";
-import { debounce } from "common/util.js";
+import { debounce } from "common/utils";
 export default {
   name: "home",
   components: {
