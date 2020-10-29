@@ -1,19 +1,33 @@
 <template>
   <div id="detail">
-    <detail-nav-bar class="detail_nav" />
-    <scroll ref="scroll" class="content">
+    <detail-nav-bar
+      ref="detailNavBar"
+      class="detail_nav"
+      @titleClick="titleClick"
+    />
+    <scroll
+      ref="scroll"
+      class="content"
+      :probe-type="3"
+      @scroll="contentScroll"
+    >
       <detail-swiper :topImages="topImages" />
       <detail-base-info :goods="goods" />
       <detail-shop-info :shop="shop" />
-      <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad" />
-      <detail-param-info :param-info="paramInfo" />
-      <detail-comment-info :comment-info="commentInfo" />
+      <detail-goods-info
+        :detail-info="detailInfo"
+        @detailImageLoad="detailImageLoad"
+      />
+      <detail-param-info ref="param" :param-info="paramInfo" />
+      <detail-comment-info ref="comment" :comment-info="commentInfo" />
+      <goods-list ref="recommend" :goods="recommends" />
     </scroll>
   </div>
 </template>
 
 <script>
 import Scroll from "components/common/scroll/Scroll";
+import GoodsList from "components/content/goods/GoodsList";
 
 import DetailNavBar from "./childComps/DetailNavBar";
 import DetailSwiper from "./childComps/DetailSwiper";
@@ -23,7 +37,16 @@ import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
 
-import { getDetail, Goods, Shop, GoodsParam } from "network/detail.js";
+import { itemListenerMixin } from "common/mixin";
+import { debounce } from "common/utils";
+
+import {
+  getDetail,
+  Goods,
+  Shop,
+  GoodsParam,
+  getRecommend,
+} from "network/detail.js";
 
 export default {
   name: "Detail",
@@ -36,7 +59,9 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     Scroll,
+    GoodsList,
   },
+  mixins: [itemListenerMixin],
   data() {
     return {
       iid: null,
@@ -46,6 +71,10 @@ export default {
       detailInfo: {},
       paramInfo: {},
       commentInfo: {},
+      recommends: [],
+      themeTopYs: [],
+      getThemeTopY: null,
+      currentIndex: 0,
     };
   },
   created() {
@@ -54,7 +83,6 @@ export default {
 
     // 2.根据iid请求该商品详情的数据
     getDetail(this.iid).then((res) => {
-      // console.log(res);
       const data = res.result;
 
       // 1.获取顶部的图片轮播数据
@@ -84,11 +112,56 @@ export default {
         this.commentInfo = data.rate.list[0];
       }
     });
+
+    // 3.请求推荐数据
+    getRecommend().then((res) => {
+      this.recommends = res.data.list;
+    });
+
+    // 4.给getThemeTopY赋值
+    this.getThemeTopY = debounce(() => {
+      this.themeTopYs = [];
+      this.themeTopYs.push(0);
+      this.themeTopYs.push(this.$refs.param.$el.offsetTop);
+      this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
+      this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
+      console.log(this.themeTopYs);
+    }, 100);
   },
+
   methods: {
-    imageLoad() {
-      this.$refs.scroll.refresh();
+    detailImageLoad() {
+      // this.$refs.scroll.refresh();
+      this.newRefresh();
+      this.getThemeTopY();
     },
+    titleClick(index) {
+      console.log(index);
+      this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 200);
+    },
+    contentScroll(position) {
+      // console.log(position)
+      // 1.获取y值
+      const positionY = -position.y;
+
+      // 2.positionY和主题中的值进行对比
+      let length = this.themeTopYs.length;
+      for (let i = 0; i < length; i++) {
+        if (
+          this.currentIndex !== i &&
+          ((i < length - 1 &&
+            positionY >= this.themeTopYs[i] &&
+            positionY < this.themeTopYs[i + 1]) ||
+            (i === length - 1 && positionY >= this.themeTopYs[i]))
+        ) {
+          this.currentIndex = i;
+          this.$refs.detailNavBar.currentIndex = this.currentIndex;
+        }
+      }
+    },
+  },
+  destroyed() {
+    this.$bus.$off("itemImgLoad", this.itemImgListener);
   },
 };
 </script>
@@ -102,7 +175,7 @@ export default {
 }
 .detail_nav {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   background-color: #fff;
 }
 .content {
