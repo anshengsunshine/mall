@@ -22,6 +22,8 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo" />
       <goods-list ref="recommend" :goods="recommends" />
     </scroll>
+    <detail-bottom-bar @addToCart="addToCart" />
+    <back-top @click.native="backTopClick" v-show="isShowBackTop" />
   </div>
 </template>
 
@@ -36,8 +38,9 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
+import DetailBottomBar from "./childComps/DetailBottomBar";
 
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 import { debounce } from "common/utils";
 
 import {
@@ -58,10 +61,11 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailBottomBar,
     Scroll,
     GoodsList,
   },
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   data() {
     return {
       iid: null,
@@ -125,7 +129,7 @@ export default {
       this.themeTopYs.push(this.$refs.param.$el.offsetTop);
       this.themeTopYs.push(this.$refs.comment.$el.offsetTop);
       this.themeTopYs.push(this.$refs.recommend.$el.offsetTop);
-      console.log(this.themeTopYs);
+      this.themeTopYs.push(Number.MAX_VALUE);
     }, 100);
   },
 
@@ -158,6 +162,19 @@ export default {
           this.$refs.detailNavBar.currentIndex = this.currentIndex;
         }
       }
+
+      // 3.是否显示回到顶部
+      this.listenShowBackTop(position);
+    },
+    // 添加到购物车
+    addToCart() {
+      // 1.获取购物车需要展示的信息
+      const product = {};
+      product.img = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.newPrice;
+      product.iid = this.iid;
     },
   },
   destroyed() {
@@ -179,6 +196,6 @@ export default {
   background-color: #fff;
 }
 .content {
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 49px);
 }
 </style>
