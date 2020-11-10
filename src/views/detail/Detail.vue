@@ -11,6 +11,11 @@
       :probe-type="3"
       @scroll="contentScroll"
     >
+      <ul>
+        <li v-for="item in $store.state.cartList" :key="item.iid">
+          {{ item }}
+        </li>
+      </ul>
       <detail-swiper :topImages="topImages" />
       <detail-base-info :goods="goods" />
       <detail-shop-info :shop="shop" />
@@ -140,11 +145,9 @@ export default {
       this.getThemeTopY();
     },
     titleClick(index) {
-      console.log(index);
       this.$refs.scroll.scrollTo(0, -this.themeTopYs[index], 200);
     },
     contentScroll(position) {
-      // console.log(position)
       // 1.获取y值
       const positionY = -position.y;
 
@@ -173,8 +176,11 @@ export default {
       product.img = this.topImages[0];
       product.title = this.goods.title;
       product.desc = this.goods.desc;
-      product.price = this.goods.newPrice;
+      product.price = this.goods.realPrice;
       product.iid = this.iid;
+
+      // 2.将商品添加到购物车中
+      this.$store.dispatch("addCart", product);
     },
   },
   destroyed() {

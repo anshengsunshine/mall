@@ -34,7 +34,7 @@ export default {
 
 <style lang="less" scoped>
 .bottom_bar {
-  position: fixed;
+  position: relative;
   bottom: 0;
   left: 0;
   right: 0;
