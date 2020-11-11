@@ -1,8 +1,8 @@
 <template>
   <div class="cart_list_item">
-    <!-- <div class="item_selector">
-        <CheckButton @checkedChange="checkedChange" v-model="itemInfo.checked" />
-    </div> -->
+    <div class="item_selector">
+      <check-button :is-checked="itemInfo.checked" @click.native="checkClick" />
+    </div>
     <div class="item_img">
       <img :src="itemInfo.img" alt="商品图片" />
     </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import CheckButton from "./CheckButton";
+import CheckButton from "components/content/checkButton/CheckButton";
 export default {
   name: "CartListItem",
   props: {
@@ -30,7 +30,7 @@ export default {
     CheckButton,
   },
   methods: {
-    checkedChange: function () {
+    checkClick() {
       this.itemInfo.checked = !this.itemInfo.checked;
     },
   },
@@ -55,7 +55,7 @@ export default {
   .item_title,
   .item_desc {
     overflow: hidden;
-    white-space: normal;
+    white-space: nowrap;
     text-overflow: ellipsis;
   }
 
