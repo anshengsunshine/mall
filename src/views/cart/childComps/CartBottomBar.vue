@@ -1,7 +1,7 @@
 <template>
   <div class="bottom_bar">
-    <div class="check_content">
-      <check-button class="check_btn" />
+    <div class="check_content" @click="checkClick">
+      <check-button class="check_btn" :is-checked="isSelectAll" />
       <span>全选</span>
     </div>
 
@@ -30,7 +30,7 @@ export default {
             return item.checked;
           })
           .reduce((preVal, item) => {
-              console.log(item)
+            console.log(item);
             return preVal + item.price * item.count;
           }, 0)
           .toFixed(2)
@@ -38,6 +38,20 @@ export default {
     },
     checkLength() {
       return this.cartList.filter((item) => item.checked).length;
+    },
+    isSelectAll() {
+      if (this.cartList.length === 0) return false;
+      // return !this.cartList.filter((item) => !item.checked).length;
+      return !this.cartList.find((item) => !item.checked);
+    },
+  },
+  methods: {
+    checkClick() {
+      if (this.isSelectAll) {
+        this.cartList.forEach((item) => (item.checked = false));
+      } else {
+        this.cartList.forEach((item) => (item.checked = true));
+      }
     },
   },
 };
@@ -55,7 +69,6 @@ export default {
     display: flex;
     align-items: center;
     margin-left: 10px;
-    width: 60px;
 
     .check_btn {
       display: flex;
@@ -75,6 +88,7 @@ export default {
     padding: 0 10px;
     width: 100px;
     background-color: #f00;
+    color: #fff;
     text-align: center;
   }
 }

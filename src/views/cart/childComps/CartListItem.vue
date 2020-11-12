@@ -11,7 +11,7 @@
       <div class="item_desc">商品描述{{ itemInfo.desc }}</div>
       <div class="info_bottom">
         <div class="item_price left">￥{{ itemInfo.price }}</div>
-        <div class="item_count left">￥{{ itemInfo.count }}</div>
+        <div class="item_count left">{{ itemInfo.count }}</div>
       </div>
     </div>
   </div>
@@ -84,6 +84,8 @@ export default {
 
     .info_bottom {
       margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
       position: absolute;
       bottom: 10px;
       left: 10px;
