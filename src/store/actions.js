@@ -16,7 +16,7 @@ export default {
             } else {
                 payload.count = 1;
                 context.commit(ADD_TO_CART, payload)
-                resolve("添加了新的商品")
+                resolve("已成功加入购物车")
             }
 
         })

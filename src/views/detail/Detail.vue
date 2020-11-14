@@ -186,12 +186,15 @@ export default {
       // 2.将商品添加到购物车中
       this.addCart(product).then((res) => {
         // 3.添加购物车成功的提示
-        this.toastMsg = res;
-        this.toastShow = true;
-        setTimeout(() => {
-          this.toastMsg = "";
-          this.toastShow = false;
-        }, 1000);
+        // this.toastMsg = res;
+        // this.toastShow = true;
+        // setTimeout(() => {
+        //   this.toastMsg = "";
+        //   this.toastShow = false;
+        // }, 1000);
+
+        this.$toast.show(res)
+
       });
       // this.$store.dispatch("addCart", product).then((res) => {
       //   console.log(res);
