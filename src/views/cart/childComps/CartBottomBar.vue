@@ -1,5 +1,5 @@
 <template>
-  <div class="bottom_bar">
+  <div class="bottom_bar ignore">
     <div class="check_content" @click="checkClick">
       <check-button class="check_btn" :is-checked="isSelectAll" />
       <span>全选</span>
