@@ -2,7 +2,12 @@ import {
     debounce
 } from "./utils";
 import BackTop from "components/content/backTop/BackTop";
-import {BACK_POSITION} from "common/const";
+import {
+    BACK_POSITION,
+    POP,
+    SELL,
+    NEW
+} from "common/const";
 
 
 export const itemListenerMixin = {
@@ -38,8 +43,33 @@ export const backTopMixin = {
         backTopClick() {
             this.$refs.scroll.scrollTo(0, 0);
         },
-        listenShowBackTop(position){
+        listenShowBackTop(position) {
             this.isShowBackTop = -position.y > BACK_POSITION
+        }
+    }
+}
+
+//分类页-商品列表
+export const tabControlMixin = {
+    data() {
+        return {
+            currentType: POP
+        }
+    },
+    methods: {
+        tabClick(index) {
+            switch (index) {
+                case 0:
+                    this.currentType = POP
+                    break;
+                case 1:
+                    this.currentType = NEW
+                    break;
+                case 2:
+                    this.currentType = SELL
+                    break;
+            }
+            console.log("aaaaaaaaaa---->", this.currentType)
         }
     }
 }
