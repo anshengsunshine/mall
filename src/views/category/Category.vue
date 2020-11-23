@@ -7,9 +7,16 @@
       <tab-menu :categories="categories" @selectItem="selectItem"></tab-menu>
       <scroll id="tab_content" :data="[categoryData]">
         <div>
-          <tab-content-category :subcategories="showSubcategory"></tab-content-category>
-          <tab-control :titles="['综合','新品','数量']" @itemClick="tabClick"></tab-control>
-          <tab-content-detail :category-detail="showCategoryDetail"></tab-content-detail>
+          <tab-content-category
+            :subcategories="showSubcategory"
+          ></tab-content-category>
+          <tab-control
+            :titles="['综合', '新品', '数量']"
+            @itemClick="tabClick"
+          ></tab-control>
+          <tab-content-detail
+            :category-detail="showCategoryDetail"
+          ></tab-content-detail>
         </div>
       </scroll>
     </div>
@@ -35,7 +42,6 @@ import {
 import { POP, SELL, NEW } from "common/const";
 import { tabControlMixin } from "common/mixin";
 
-
 export default {
   name: "category",
   components: {
@@ -45,7 +51,7 @@ export default {
     TabMenu,
     TabContent,
     TabContentCategory,
-    TabContentDetail
+    TabContentDetail,
   },
   mixins: [tabControlMixin],
   data() {
@@ -55,7 +61,7 @@ export default {
       currentIndex: -1,
     };
   },
-  crated() {
+  created() {
     // 1.请求分类数据
     this._getCategory();
   },
@@ -64,60 +70,62 @@ export default {
       if (this.currentIndex === -1) return {};
       return this.categoryData[this.currentIndex].subcategories;
     },
-    showCategoryDetail(){
-      if(this.currentIndex === -1) return [];
-      return this.categoryData[this.currentIndex].categoryDetail[this.currentType]
-    }
+    showCategoryDetail() {
+      if (this.currentIndex === -1) return [];
+      return this.categoryData[this.currentIndex].categoryDetail[
+        this.currentType
+      ];
+    },
   },
-  methods:{
-    _getCategory(){
-      getCategory().then(res => {
-        console.log(res)
+  methods: {
+    _getCategory() {
+      getCategory().then((res) => {
+        console.log(res);
         // 1.获取分类数据
         this.categories = res.data.category.list;
         // 2.初始化每个类别的子数据
-        for(let i = 0;i<this.categories.length;i++){
+        for (let i = 0; i < this.categories.length; i++) {
           this.categoryData[i] = {
-            subcategories:{},
-            categoryDetail:{
-              'pop':[],
-              'new':[],
-              'sell':[]
-            }
-          }
+            subcategories: {},
+            categoryDetail: {
+              pop: [],
+              new: [],
+              sell: [],
+            },
+          };
         }
         // 3. 请求第一个分类的数据
-        this._getSubcategories(0)
-      })
+        this._getSubcategories(0);
+      });
     },
-    _getSubcategories(index){
+    _getSubcategories(index) {
       this.currentIndex = index;
-      const mailKey = this.categories[index].mailKey;
-      getSubcategory(mailKey).then(res=>{
+      const mailKey = this.categories[index].maitKey;
+      getSubcategory(mailKey).then((res) => {
         this.categoryData[index].subcategories = res.data;
         this.categoryData = {...this.categoryData};
         this._getCategoryDetail(POP);
         this._getCategoryDetail(SELL);
         this._getCategoryDetail(NEW);
-      })
+      });
     },
-    _getCategoryDetail(type){
+    _getCategoryDetail(type) {
       // 1.获取请求的miniWallKey
-      const miniWallKey = this.categories[this.currentIndex].miniWallKey;
+      const miniWallKey = this.categories[this.currentIndex].miniWallkey;
       // 2.发送请求，传入miniWallKey和type
-      getCategoryDetail(miniWallKey,type).then(res=>{
+      getCategoryDetail(miniWallKey, type).then((res) => {
         // 3.将获取的数据保存下来
-        this.categoryData[this.currentIndex].categoryDetail[type] = res
-        this.categoryData = {...this.categoryData}
-      })
+        this.categoryData[this.currentIndex].categoryDetail[type] = res;
+        this.categoryData = { ...this.categoryData };
+      });
     },
     /**
      * 事件响应相关的办法
-    */
-   selectItem(index){
-     this._getSubcategories(index)
-   }
-  }
+     */
+    selectItem(index) {
+      this._getSubcategories(index);
+    },
+  },
 };
 </script>
 
@@ -143,6 +151,7 @@ export default {
   #tab_content {
     height: 100%;
     flex: 1;
+    // overflow-y: auto;
   }
 }
 </style>
